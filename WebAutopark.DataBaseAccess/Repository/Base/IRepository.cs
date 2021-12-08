@@ -2,13 +2,13 @@
 
 namespace WebAutopark.DataBaseAccess.Repository.Base
 {
-    interface IRepository<T> 
+    public interface IRepository<T> 
         where T : class
     {
-        public IEnumerable<T> GetAllItems();
-        public T GetItem(int id);
-        public void Create(T item);
-        public void Update(T item);
-        public void Delete(int id);
+        IEnumerable<T> GetAllItems();
+        T GetItem(int id);
+        void Create(T item);
+        void Update(T item);
+        void Delete(int id);
     }
 }

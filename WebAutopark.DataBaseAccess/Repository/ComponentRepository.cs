@@ -5,7 +5,7 @@ using WebAutopark.DataBaseAccess.Repository.Base;
 
 namespace WebAutopark.DataBaseAccess.Repository
 {
-    class ComponentRepository : BaseRepository, IRepository<Component>
+    public class ComponentRepository : ConnectionRepository, IRepository<Component>
     {
         private readonly string QueryCreate = "INSERT INTO Components (Name) VALUES (@Name)";
 
@@ -19,10 +19,10 @@ namespace WebAutopark.DataBaseAccess.Repository
 
         public ComponentRepository(string connectionString) : base(connectionString) {}
 
-        public void Create(Component item) => DataBase.Execute(QueryCreate, item);
-        public void Delete(int id) => DataBase.Execute(QueryDelete, id);
-        public IEnumerable<Component> GetAllItems() => DataBase.Query<Component>(QueryGetAll).AsList();
-        public Component GetItem(int id) => DataBase.QueryFirstOrDefault<Component>(QueryGet, new { id });
-        public void Update(Component item) => DataBase.Execute(QueryUpdate, item);
+        public void Create(Component item) => DataBaseConnection.Execute(QueryCreate, item);
+        public void Delete(int id) => DataBaseConnection.Execute(QueryDelete, id);
+        public IEnumerable<Component> GetAllItems() => DataBaseConnection.Query<Component>(QueryGetAll).AsList();
+        public Component GetItem(int id) => DataBaseConnection.QueryFirstOrDefault<Component>(QueryGet, new { id });
+        public void Update(Component item) => DataBaseConnection.Execute(QueryUpdate, item);
     }
 }

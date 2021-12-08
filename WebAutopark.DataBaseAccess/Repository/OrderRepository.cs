@@ -5,7 +5,7 @@ using WebAutopark.DataBaseAccess.Repository.Base;
 
 namespace WebAutopark.DataBaseAccess.Repository
 {
-    class OrderRepository : BaseRepository, IRepository<Order>
+    public class OrderRepository : ConnectionRepository, IRepository<Order>
     {
         private readonly string QueryCreate = "INSERT INTO Orders (VehicleId) VALUES (@VehicleId)";
 
@@ -19,10 +19,10 @@ namespace WebAutopark.DataBaseAccess.Repository
 
         public OrderRepository(string connectionString) : base(connectionString) {}
 
-        public void Create(Order item) => DataBase.Execute(QueryCreate, item);
-        public void Delete(int id) => DataBase.Execute(QueryDelete, id);
-        public IEnumerable<Order> GetAllItems() => DataBase.Query<Order>(QueryGetAll).AsList();
-        public Order GetItem(int id) => DataBase.QueryFirstOrDefault<Order>(QueryGet, new { id });
-        public void Update(Order item) => DataBase.Execute(QueryUpdate, item);
+        public void Create(Order item) => DataBaseConnection.Execute(QueryCreate, item);
+        public void Delete(int id) => DataBaseConnection.Execute(QueryDelete, id);
+        public IEnumerable<Order> GetAllItems() => DataBaseConnection.Query<Order>(QueryGetAll).AsList();
+        public Order GetItem(int id) => DataBaseConnection.QueryFirstOrDefault<Order>(QueryGet, new { id });
+        public void Update(Order item) => DataBaseConnection.Execute(QueryUpdate, item);
     }
 }

@@ -5,7 +5,7 @@ using WebAutopark.DataBaseAccess.Repository.Base;
 
 namespace WebAutopark.DataBaseAccess.Repository
 {
-    class OrderItemRepository : BaseRepository, IRepository<OrderItem>
+    public class OrderItemRepository : ConnectionRepository, IRepository<OrderItem>
     {
         private readonly string QueryCreate = "INSERT INTO OrderItems (OrderId, ComponentId, Quantity) " +
                                               "VALUES (@OrderId, @ComponentId, @Quantity)";
@@ -24,10 +24,10 @@ namespace WebAutopark.DataBaseAccess.Repository
 
         public OrderItemRepository(string connectionString) : base(connectionString) {}
 
-        public void Create(OrderItem item) => DataBase.Execute(QueryCreate, item);
-        public void Delete(int id) => DataBase.Execute(QueryDelete, id);
-        public IEnumerable<OrderItem> GetAllItems() => DataBase.Query<OrderItem>(QueryGetAll).AsList();
-        public OrderItem GetItem(int id) => DataBase.QueryFirstOrDefault<OrderItem>(QueryGet, new { id });
-        public void Update(OrderItem item) => DataBase.Execute(QueryUpdate, item);
+        public void Create(OrderItem item) => DataBaseConnection.Execute(QueryCreate, item);
+        public void Delete(int id) => DataBaseConnection.Execute(QueryDelete, id);
+        public IEnumerable<OrderItem> GetAllItems() => DataBaseConnection.Query<OrderItem>(QueryGetAll).AsList();
+        public OrderItem GetItem(int id) => DataBaseConnection.QueryFirstOrDefault<OrderItem>(QueryGet, new { id });
+        public void Update(OrderItem item) => DataBaseConnection.Execute(QueryUpdate, item);
     }
 }

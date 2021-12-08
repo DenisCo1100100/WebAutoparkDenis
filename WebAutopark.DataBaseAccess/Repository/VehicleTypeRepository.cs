@@ -5,7 +5,7 @@ using WebAutopark.DataBaseAccess.Repository.Base;
 
 namespace WebAutopark.DataBaseAccess.Repository
 {
-    class VehicleTypeRepository : BaseRepository, IRepository<VehicleType>
+    public class VehicleTypeRepository : ConnectionRepository, IRepository<VehicleType>
     {
         private readonly string QueryCreate = "INSERT INTO VehicleTypes (Name) VALUES (@Name)";
 
@@ -19,10 +19,10 @@ namespace WebAutopark.DataBaseAccess.Repository
 
         public VehicleTypeRepository(string connectionString) : base(connectionString) {}
 
-        public void Create(VehicleType item) => DataBase.Execute(QueryCreate, item);
-        public void Delete(int id) => DataBase.Execute(QueryDelete, id);
-        public IEnumerable<VehicleType> GetAllItems() => DataBase.Query<VehicleType>(QueryGetAll).AsList();
-        public VehicleType GetItem(int id) => DataBase.QueryFirstOrDefault<VehicleType>(QueryGet, new { id });
-        public void Update(VehicleType item) => DataBase.Execute(QueryUpdate, item);
+        public void Create(VehicleType item) => DataBaseConnection.Execute(QueryCreate, item);
+        public void Delete(int id) => DataBaseConnection.Execute(QueryDelete, id);
+        public IEnumerable<VehicleType> GetAllItems() => DataBaseConnection.Query<VehicleType>(QueryGetAll).AsList();
+        public VehicleType GetItem(int id) => DataBaseConnection.QueryFirstOrDefault<VehicleType>(QueryGet, new { id });
+        public void Update(VehicleType item) => DataBaseConnection.Execute(QueryUpdate, item);
     }
 }
