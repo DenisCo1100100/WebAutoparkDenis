@@ -1,9 +1,10 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using System;
 using System.Data.Common;
+using System.Data.SqlClient;
 
 namespace WebAutopark.DataBaseAccess.Repository.Base
 {
-    public abstract class BaseRepository
+    public abstract class BaseRepository : IDisposable
     {
         protected readonly DbConnection DataBase;
 
@@ -11,5 +12,7 @@ namespace WebAutopark.DataBaseAccess.Repository.Base
         {
             DataBase = new SqlConnection(connectionString);
         }
+
+        public void Dispose() => DataBase.Dispose();
     }
 }
