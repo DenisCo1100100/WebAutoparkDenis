@@ -7,7 +7,7 @@
         Black,
         White,
         Gray,
-        Grean,
+        Green,
         Yellow
     }
 }

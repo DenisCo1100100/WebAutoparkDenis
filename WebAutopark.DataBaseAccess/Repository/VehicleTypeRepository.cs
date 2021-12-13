@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using WebAutopark.Core.Entities;
 using WebAutopark.DataBaseAccess.Repository.Base;
+using WebAutopark.DataBaseAccess.Services;
 
 namespace WebAutopark.DataBaseAccess.Repository
 {
-    public class VehicleTypeRepository : ConnectionRepository, IRepository<VehicleType>
+    public class VehicleTypeRepository : RepositoryBase, IRepository<VehicleType>
     {
         private readonly string QueryCreate = "INSERT INTO VehicleTypes (Name) VALUES (@Name)";
 
@@ -17,12 +18,12 @@ namespace WebAutopark.DataBaseAccess.Repository
 
         private readonly string QueryUpdate = "UPDATE VehicleTypes SET Name = @Name WHERE VehicleTypeId = @VehicleTypeId";
 
-        public VehicleTypeRepository(string connectionString) : base(connectionString) {}
+        public VehicleTypeRepository(IConnectionStringProvider connectionStringProvider) : base(connectionStringProvider) { }
 
-        public void Create(VehicleType item) => DataBaseConnection.Execute(QueryCreate, item);
-        public void Delete(int id) => DataBaseConnection.Execute(QueryDelete, id);
-        public IEnumerable<VehicleType> GetAllItems() => DataBaseConnection.Query<VehicleType>(QueryGetAll).AsList();
-        public VehicleType GetItem(int id) => DataBaseConnection.QueryFirstOrDefault<VehicleType>(QueryGet, new { id });
-        public void Update(VehicleType item) => DataBaseConnection.Execute(QueryUpdate, item);
+        public void Create(VehicleType item) => Connection.Execute(QueryCreate, item);
+        public void Delete(int id) => Connection.Execute(QueryDelete, id);
+        public IEnumerable<VehicleType> GetAllItems() => Connection.Query<VehicleType>(QueryGetAll).AsList();
+        public VehicleType GetItem(int id) => Connection.QueryFirstOrDefault<VehicleType>(QueryGet, new { id });
+        public void Update(VehicleType item) => Connection.Execute(QueryUpdate, item);
     }
 }

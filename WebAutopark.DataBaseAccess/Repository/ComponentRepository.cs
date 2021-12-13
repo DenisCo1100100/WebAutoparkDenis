@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using WebAutopark.Core.Entities;
 using WebAutopark.DataBaseAccess.Repository.Base;
+using WebAutopark.DataBaseAccess.Services;
 
 namespace WebAutopark.DataBaseAccess.Repository
 {
-    public class ComponentRepository : ConnectionRepository, IRepository<Component>
+    public class ComponentRepository : RepositoryBase, IRepository<Component>
     {
         private readonly string QueryCreate = "INSERT INTO Components (Name) VALUES (@Name)";
 
@@ -17,12 +18,12 @@ namespace WebAutopark.DataBaseAccess.Repository
 
         private readonly string QueryUpdate = "UPDATE Components SET Name = @Name WHERE ComponentId = @ComponentId";
 
-        public ComponentRepository(string connectionString) : base(connectionString) {}
+        public ComponentRepository(IConnectionStringProvider connectionStringProvider) : base(connectionStringProvider) {}
 
-        public void Create(Component item) => DataBaseConnection.Execute(QueryCreate, item);
-        public void Delete(int id) => DataBaseConnection.Execute(QueryDelete, id);
-        public IEnumerable<Component> GetAllItems() => DataBaseConnection.Query<Component>(QueryGetAll).AsList();
-        public Component GetItem(int id) => DataBaseConnection.QueryFirstOrDefault<Component>(QueryGet, new { id });
-        public void Update(Component item) => DataBaseConnection.Execute(QueryUpdate, item);
+        public void Create(Component item) => Connection.Execute(QueryCreate, item);
+        public void Delete(int id) => Connection.Execute(QueryDelete, id);
+        public IEnumerable<Component> GetAllItems() => Connection.Query<Component>(QueryGetAll).AsList();
+        public Component GetItem(int id) => Connection.QueryFirstOrDefault<Component>(QueryGet, new { id });
+        public void Update(Component item) => Connection.Execute(QueryUpdate, item);
     }
 }

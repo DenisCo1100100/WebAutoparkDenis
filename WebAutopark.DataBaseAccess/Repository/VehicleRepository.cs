@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using WebAutopark.Core.Entities;
 using WebAutopark.DataBaseAccess.Repository.Base;
+using WebAutopark.DataBaseAccess.Services;
 
 namespace WebAutopark.DataBaseAccess.Repository
 {
-    public class VehicleRepository : ConnectionRepository, IRepository<Vehicle>
+    public class VehicleRepository : RepositoryBase, IRepository<Vehicle>
     {
         private readonly string QueryCreate = "INSERT INTO Vehicles (VehicleTypeId, Model, RegistrationNumber, Weight, Year, Mileage, Color) " +
                                               "VALUES (@VehicleTypeId, @Model, @RegistrationNumber, @Weight, @Year, @Mileage, @Color)";
@@ -26,12 +27,12 @@ namespace WebAutopark.DataBaseAccess.Repository
                                               "Color = @Color" +
                                               "WHERE VehicleId = @VehicleId";
 
-        public VehicleRepository(string connectionString) : base(connectionString) {}
+        public VehicleRepository(IConnectionStringProvider connectionStringProvider) : base(connectionStringProvider) { }
 
-        public void Create(Vehicle item) => DataBaseConnection.Execute(QueryCreate, item);
-        public void Delete(int id) => DataBaseConnection.Execute(QueryDelete, id);
-        public IEnumerable<Vehicle> GetAllItems() => DataBaseConnection.Query<Vehicle>(QueryGetAll).AsList();
-        public Vehicle GetItem(int id) => DataBaseConnection.QueryFirstOrDefault<Vehicle>(QueryGet, new { id });
-        public void Update(Vehicle item) => DataBaseConnection.Execute(QueryUpdate, item);
+        public void Create(Vehicle item) => Connection.Execute(QueryCreate, item);
+        public void Delete(int id) => Connection.Execute(QueryDelete, id);
+        public IEnumerable<Vehicle> GetAllItems() => Connection.Query<Vehicle>(QueryGetAll).AsList();
+        public Vehicle GetItem(int id) => Connection.QueryFirstOrDefault<Vehicle>(QueryGet, new { id });
+        public void Update(Vehicle item) => Connection.Execute(QueryUpdate, item);
     }
 }

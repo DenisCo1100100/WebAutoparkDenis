@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebAutopark.DataBaseAccess.Services;
 
 namespace WebAutopark
 {
@@ -18,6 +19,7 @@ namespace WebAutopark
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddSingleton<IConnectionStringProvider, ConnectionStringProvider>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -36,9 +38,9 @@ namespace WebAutopark
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
-                             {
-                                 endpoints.MapDefaultControllerRoute();
-                             });
+            {
+                endpoints.MapDefaultControllerRoute();
+            });
         }
     }
 }

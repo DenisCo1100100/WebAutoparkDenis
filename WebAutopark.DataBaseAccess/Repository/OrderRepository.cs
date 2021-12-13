@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using WebAutopark.Core.Entities;
 using WebAutopark.DataBaseAccess.Repository.Base;
+using WebAutopark.DataBaseAccess.Services;
 
 namespace WebAutopark.DataBaseAccess.Repository
 {
-    public class OrderRepository : ConnectionRepository, IRepository<Order>
+    public class OrderRepository : RepositoryBase, IRepository<Order>
     {
         private readonly string QueryCreate = "INSERT INTO Orders (VehicleId) VALUES (@VehicleId)";
 
@@ -17,12 +18,12 @@ namespace WebAutopark.DataBaseAccess.Repository
 
         private readonly string QueryUpdate = "UPDATE Orders SET VehicleId = @VehicleId WHERE OrdersId = @OrdersId";
 
-        public OrderRepository(string connectionString) : base(connectionString) {}
+        public OrderRepository(IConnectionStringProvider connectionStringProvider) : base(connectionStringProvider) { }
 
-        public void Create(Order item) => DataBaseConnection.Execute(QueryCreate, item);
-        public void Delete(int id) => DataBaseConnection.Execute(QueryDelete, id);
-        public IEnumerable<Order> GetAllItems() => DataBaseConnection.Query<Order>(QueryGetAll).AsList();
-        public Order GetItem(int id) => DataBaseConnection.QueryFirstOrDefault<Order>(QueryGet, new { id });
-        public void Update(Order item) => DataBaseConnection.Execute(QueryUpdate, item);
+        public void Create(Order item) => Connection.Execute(QueryCreate, item);
+        public void Delete(int id) => Connection.Execute(QueryDelete, id);
+        public IEnumerable<Order> GetAllItems() => Connection.Query<Order>(QueryGetAll).AsList();
+        public Order GetItem(int id) => Connection.QueryFirstOrDefault<Order>(QueryGet, new { id });
+        public void Update(Order item) => Connection.Execute(QueryUpdate, item);
     }
 }
