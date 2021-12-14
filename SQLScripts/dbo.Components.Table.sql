@@ -1,13 +1,13 @@
-﻿USE [WebAutoparkDB]
+USE [WebAutoparkDB]
 GO
-/****** Object:  Table [dbo].[Components]    Script Date: 08.12.2021 21:31:47 ******/
+/****** Object:  Table [dbo].[Components]    Script Date: 14.12.2021 23:45:11 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Components](
 	[ComponentId] [int] NOT NULL,
-	[Name] [nchar](50) NULL,
+	[Name] [nvarchar](50) NOT NULL,
  CONSTRAINT [PK_Components] PRIMARY KEY CLUSTERED 
 (
 	[ComponentId] ASC

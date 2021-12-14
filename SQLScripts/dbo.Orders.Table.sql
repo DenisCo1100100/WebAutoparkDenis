@@ -1,13 +1,13 @@
-﻿USE [WebAutoparkDB]
+USE [WebAutoparkDB]
 GO
-/****** Object:  Table [dbo].[Orders]    Script Date: 08.12.2021 21:31:50 ******/
+/****** Object:  Table [dbo].[Orders]    Script Date: 14.12.2021 23:45:11 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Orders](
 	[OrdersId] [int] NOT NULL,
-	[VehicleId] [int] NULL,
+	[VehicleId] [int] NOT NULL,
  CONSTRAINT [PK_Orders] PRIMARY KEY CLUSTERED 
 (
 	[OrdersId] ASC
