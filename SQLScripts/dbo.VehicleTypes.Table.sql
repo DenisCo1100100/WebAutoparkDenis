@@ -1,6 +1,6 @@
 USE [WebAutoparkDB]
 GO
-/****** Object:  Table [dbo].[VehicleTypes]    Script Date: 14.12.2021 23:45:11 ******/
+/****** Object:  Table [dbo].[VehicleTypes]    Script Date: 15.12.2021 21:01:01 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
