@@ -1,16 +1,7 @@
-USE [WebAutoparkDB]
-GO
-/****** Object:  Table [dbo].[VehicleTypes]    Script Date: 15.12.2021 21:01:01 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[VehicleTypes](
-	[VehicleTypeId] [int] NOT NULL,
-	[Name] [nvarchar](50) NOT NULL,
- CONSTRAINT [PK_VehicleTypes] PRIMARY KEY CLUSTERED 
+﻿CREATE TABLE [VehicleTypes]
 (
-	[VehicleTypeId] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO
+[VehicleTypesId] INT IDENTITY(1, 1) NOT NULL,
+[Name] NVARCHAR(50) NOT NULL,
+
+CONSTRAINT [PK_VehicleTypes] PRIMARY KEY CLUSTERED([VehicleTypesId] ASC)
+);

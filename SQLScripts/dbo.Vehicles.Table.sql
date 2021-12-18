@@ -1,27 +1,14 @@
-USE [WebAutoparkDB]
-GO
-/****** Object:  Table [dbo].[Vehicles]    Script Date: 15.12.2021 21:01:01 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[Vehicles](
-	[VehicleId] [int] NOT NULL,
-	[VehicleTypeId] [int] NOT NULL,
-	[Model] [nvarchar](50) NOT NULL,
-	[RegistrationNumber] [nvarchar](50) NOT NULL,
-	[Weight] [float] NOT NULL,
-	[Year] [int] NOT NULL,
-	[Mileage] [float] NOT NULL,
-	[Color] [int] NOT NULL,
- CONSTRAINT [PK_Vehicles] PRIMARY KEY CLUSTERED 
+﻿CREATE TABLE [Vehicles]
 (
-	[VehicleId] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-ALTER TABLE [dbo].[Vehicles]  WITH CHECK ADD  CONSTRAINT [FK_Vehicles_VehicleTypes] FOREIGN KEY([VehicleId])
-REFERENCES [dbo].[VehicleTypes] ([VehicleTypeId])
-GO
-ALTER TABLE [dbo].[Vehicles] CHECK CONSTRAINT [FK_Vehicles_VehicleTypes]
-GO
+[VehicleId] INT IDENTITY(1, 1) NOT NULL,
+[VehicleTypeId] INT NOT NULL,
+[Model] NVARCHAR(50) NOT NULL,
+[RegistrationNumber] NVARCHAR(50) NOT NULL,
+[Weight] FLOAT NOT NULL,
+[Year] INT NOT NULL,
+[Mileage] FLOAT NOT NULL,
+[Color] INT NOT NULL,
+
+CONSTRAINT [PK_Vehicles] PRIMARY KEY CLUSTERED([VehicleId] ASC),
+CONSTRAINT [FK_Vehicles_VehicleTypes] FOREIGN KEY([VehicleTypeId]) REFERENCES [VehicleTypes]([VehicleTypesId]) ON DELETE CASCADE
+);
