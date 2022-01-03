@@ -1,0 +1,28 @@
+﻿@model WebAutopark.BusinessLogic.Models.ComponentModel
+@{
+    ViewData["Title"] = "Update Component";
+}
+
+<div class="card col-md-7 m-auto">
+<form asp-action="Update" asp-controller="Component">
+    <div class="card-header">
+        <h2 class="mb-2 text-center">UPDATE COMPONENT</h2>
+    </div>
+        <div class="validation" asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="ComponentId" />
+        
+        <div class="form-group">
+            <label asp-for="Name" class="control-label ml-md-1"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group text-center">
+            <input type="submit" value="Save" class="btn btn-primary"/>
+        </div>
+</form>
+</div>
+
+<div class="text-center mt-3">
+    <a asp-controller="Component" asp-action="Index">Back to list</a>
+</div>

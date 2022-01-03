@@ -11,7 +11,15 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="10.1.1" />
+      <PackageReference Include="AutoMapperBuilder" Version="1.1.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\WebAutopark.BusinessLogic\WebAutopark.BusinessLogic.csproj" />
       <ProjectReference Include="..\WebAutopark.DataBaseAccess\WebAutopark.DataBaseAccess.csproj" />
     </ItemGroup>
+
+    <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

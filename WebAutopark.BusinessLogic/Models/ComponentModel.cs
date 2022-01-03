@@ -1,6 +1,6 @@
-﻿namespace WebAutopark.Core.Entities
+﻿namespace WebAutopark.BusinessLogic.Models
 {
-    public class Component
+    public class ComponentModel
     {
         public int ComponentId { get; set; }
         public string Name { get; set; }

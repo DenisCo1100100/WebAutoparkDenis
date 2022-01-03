@@ -4,14 +4,13 @@ namespace WebAutopark.Core.Entities
 {
     public class Vehicle
     {
-        public int Id { get; }
-        public int VehicleTypeId { get; }
-        public string Model { get; }
-        public string LicensePlate { get; }
-        public double Weight { get; }
-        public int YearIssue { get; }
-        public double Mileage { get; }
-        public ColorType Color { get; }
-        public double TankCapacity { get; }
+        public int VehicleId { get; set; }
+        public int VehicleTypeId { get; set; }
+        public string Model { get; set; }
+        public string RegistrationNumber { get; set; }
+        public double Weight { get; set; }
+        public int Year { get; set; }
+        public double Mileage { get; set; }
+        public ColorType Color { get; set; }
     }
 }

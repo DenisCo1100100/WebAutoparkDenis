@@ -8,4 +8,8 @@
     <PackageReference Include="AutoMapperBuilder" Version="1.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\WebAutopark.Core\WebAutopark.Core.csproj" />
+  </ItemGroup>
+
 </Project>

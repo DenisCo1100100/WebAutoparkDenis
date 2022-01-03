@@ -1,0 +1,46 @@
+﻿@model WebAutopark.BusinessLogic.Models.VehicleModel
+
+@{
+    ViewData["Title"] = "Delete Vehicle";
+}
+
+<hr />
+<h4 class="text-center my-1">DELETE VEHICLE</h4>
+<hr />
+<div class="form-group text-center">
+    <dl class="dl-horizontal">
+        <dt>Id</dt>
+        <dd>
+            @Model.VehicleTypeId
+        </dd>
+        <dt>Model</dt>
+        <dd>
+            @Model.Model
+        </dd>
+        <dt>RegistrationNumber</dt>
+        <dd>
+            @Model.RegistrationNumber
+        </dd>
+        <dt>Weight</dt>
+        <dd>
+            @Model.Weight
+        </dd>
+        <dt>Year</dt>
+        <dd>
+            @Model.Year
+        </dd>
+        <dt>Color</dt>
+        <dd>
+            @Model.Color
+        </dd>
+    </dl>
+
+    <form asp-controller="Vehicle" asp-action="Delete" method="post">
+        <div class="form-group">
+            <input type="submit" class="btn btn-outline-primary" value="Delete" />
+        </div>
+    </form>   
+</div>
+<div class="text-center mt-3">
+    <a asp-controller="Vehicle" asp-action="Index">Back to list</a>
+</div>
