@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebAutopark.BusinessLogic.Models.VehicleTypeModel>
+﻿@model IEnumerable<WebAutopark.Models.VehicleTypeViewModel>
 
 @{
     ViewData["Title"] = "ViewType list";
@@ -16,6 +16,9 @@
             <th>
                 Name
             </th>
+            <th>
+                TaxCoefficient
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -29,8 +32,11 @@
                 <td>
                     @item.Name
                 </td>
+                <td>
+                    @item.TaxCoefficient
+                </td>
                 <td class="form-group text-right">
-                    <a asp-controller="VehicleType" asp-action="Update" asp-route-id="@item.VehicleTypeId">Udpate</a>
+                    <a asp-controller="VehicleType" asp-action="Update" asp-route-id="@item.VehicleTypeId">Update</a>
                     <a asp-controller="VehicleType" asp-action="Delete" asp-route-id="@item.VehicleTypeId">Delete</a>
                 </td>
             </tr>

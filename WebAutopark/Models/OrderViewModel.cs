@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WebAutopark.BusinessLogic.Models
+namespace WebAutopark.Models
 {
-    public class OrderModel
+    public class OrderViewModel
     {
         public int OrderId { get; set; }
         [Required] public int VehicleId { get; set; }

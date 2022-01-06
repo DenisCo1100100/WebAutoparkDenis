@@ -1,4 +1,4 @@
-﻿@model WebAutopark.BusinessLogic.Models.VehicleTypeModel
+﻿@model WebAutopark.Models.VehicleTypeViewModel
 
 @{
     ViewData["Title"] = "Delete VehicleType";
@@ -17,6 +17,9 @@
         <dt>Name</dt>
         <dd>
             @Model.Name
+        </dd>
+        <dd>
+            @Model.TaxCoefficient
         </dd>
     </dl>
 

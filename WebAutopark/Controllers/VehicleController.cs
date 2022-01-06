@@ -1,40 +1,41 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using WebAutopark.BusinessLogic.Models;
-using WebAutopark.Core.Entities;
-using WebAutopark.DataBaseAccess.Repository.Base;
+using WebAutopark.BusinessLogic.DataTransferObject;
+using WebAutopark.BusinessLogic.Services.Base;
+using WebAutopark.Models;
 
 namespace WebAutopark.Controllers
 {
     public class VehicleController : Controller
     {
-        private readonly IRepository<Vehicle> _repository;
+        private readonly IDtoService<VehicleDto> _vehicleDtoService;
         private readonly IMapper _mapper;
 
-        public VehicleController(IRepository<Vehicle> repository, IMapper mapper)
+        public VehicleController(IDtoService<VehicleDto> vehicleDtoService, IMapper mapper)
         {
-            _repository = repository;
+            _vehicleDtoService = vehicleDtoService;
             _mapper = mapper;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
-            var componentsList = _repository.GetAllItems();
+            var vehicleList = _vehicleDtoService.GetAllItems();
 
-            return View(_mapper.Map<IEnumerable<VehicleModel>>(componentsList));
+            var vehicleViewModel = _mapper.Map<IEnumerable<VehicleViewModel>>(vehicleList);
+            return View(vehicleViewModel);
         }
 
         [HttpGet]
         public IActionResult Info(int id)
         {
-            var vehicle = _repository.GetItem(id);
+            var vehicle = _vehicleDtoService.GetItem(id);
 
             if (vehicle is null)
                 return NotFound();
 
-            var vehicleModel = _mapper.Map<VehicleModel>(vehicle);
-
+            var vehicleModel = _mapper.Map<VehicleViewModel>(vehicle);
             return View(vehicleModel);
         }
 
@@ -43,62 +44,59 @@ namespace WebAutopark.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(VehicleModel vehicleModel)
+        public IActionResult Create(VehicleViewModel vehicleModel)
         {
             if (ModelState.IsValid)
             {
-                var vehicle = _mapper.Map<Vehicle>(vehicleModel);
-                _repository.Create(vehicle);
-
-                return RedirectToAction("Index");
+                var vehicle = _mapper.Map<VehicleDto>(vehicleModel);
+                _vehicleDtoService.Create(vehicle);
             }
 
-            return View(vehicleModel);
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
         public IActionResult Update(int id)
         {
-            var vehicle = _repository.GetItem(id);
+            var vehicle = _vehicleDtoService.GetItem(id);
 
             if (vehicle is null)
-            {
-                NotFound();
-            }
+                return NotFound();
 
-            return View(_mapper.Map<VehicleModel>(vehicle));
+            var vehicleViewModel = _mapper.Map<VehicleViewModel>(vehicle);
+            return View(vehicleViewModel);
         }
 
         [HttpPost]
-        public IActionResult Update(VehicleModel vehicleModel)
+        public IActionResult Update(VehicleViewModel vehicleModel)
         {
             if (ModelState.IsValid)
             {
-                var vehicle = _mapper.Map<Vehicle>(vehicleModel);
-                _repository.Update(vehicle);
+                var vehicle = _mapper.Map<VehicleDto>(vehicleModel);
+                _vehicleDtoService.Update(vehicle);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
         [ActionName("Delete")]
         public IActionResult ConfirmDelete(int id)
         {
-            var vehicle = _repository.GetItem(id);
+            var vehicle = _vehicleDtoService.GetItem(id);
 
             if (vehicle is null)
                 return NotFound();
 
-            var vehicleView = _mapper.Map<VehicleModel>(vehicle);
-            return View(vehicleView);
+            var vehicleViewModel = _mapper.Map<VehicleViewModel>(vehicle);
+            return View(vehicleViewModel);
         }
 
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            _repository.Delete(id);
-            return RedirectToAction("Index");
+            _vehicleDtoService.Delete(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

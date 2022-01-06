@@ -1,40 +1,40 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using WebAutopark.BusinessLogic.Models;
-using WebAutopark.Core.Entities;
-using WebAutopark.DataBaseAccess.Repository.Base;
+using WebAutopark.BusinessLogic.DataTransferObject;
+using WebAutopark.BusinessLogic.Services.Base;
+using WebAutopark.Models;
 
 namespace WebAutopark.Controllers
 {
     public class VehicleTypeController : Controller
     {
-        private readonly IRepository<VehicleType> _repository;
+        private readonly IDtoService<VehicleTypeDto> _vehicleTypeServicec;
         private readonly IMapper _mapper;
 
-        public VehicleTypeController(IRepository<VehicleType> repository, IMapper mapper)
+        public VehicleTypeController(IDtoService<VehicleTypeDto> vehicleTypeServicec, IMapper mapper)
         {
-            _repository = repository;
+            _vehicleTypeServicec = vehicleTypeServicec;
             _mapper = mapper;
         }
 
         public IActionResult Index()
         {
-            var vehicleList = _repository.GetAllItems();
+            var vehicleTypeList = _vehicleTypeServicec.GetAllItems();
 
-            return View(_mapper.Map<IEnumerable<VehicleTypeModel>>(vehicleList));
+            var vehicleTypeViewModel = _mapper.Map<IEnumerable<VehicleTypeViewModel>>(vehicleTypeList);
+            return View(vehicleTypeViewModel);
         }
 
         [HttpGet]
         public IActionResult Info(int id)
         {
-            var vehicleType = _repository.GetItem(id);
+            var vehicleType = _vehicleTypeServicec.GetItem(id);
 
             if (vehicleType is null)
                 return NotFound();
 
-            var vehicleTypeModel = _mapper.Map<VehicleTypeModel>(vehicleType);
-
+            var vehicleTypeModel = _mapper.Map<VehicleTypeViewModel>(vehicleType);
             return View(vehicleTypeModel);
         }
 
@@ -42,62 +42,59 @@ namespace WebAutopark.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(VehicleTypeModel vehicleTypeModel)
+        public IActionResult Create(VehicleTypeViewModel vehicleTypeModel)
         {
             if (ModelState.IsValid)
             {
-                var vehicleType = _mapper.Map<VehicleType>(vehicleTypeModel);
-                _repository.Create(vehicleType);
-
-                return RedirectToAction("Index");
+                var vehicleType = _mapper.Map<VehicleTypeDto>(vehicleTypeModel);
+                _vehicleTypeServicec.Create(vehicleType);
             }
 
-            return View(vehicleTypeModel);
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
         public IActionResult Update(int id)
         {
-            var vehicleType = _repository.GetItem(id);
+            var vehicleType = _vehicleTypeServicec.GetItem(id);
 
             if (vehicleType is null)
-            {
-                NotFound();
-            }
+                return NotFound();
 
-            return View(_mapper.Map<VehicleTypeModel>(vehicleType));
+            var vehicleTypeViewModel = _mapper.Map<VehicleTypeViewModel>(vehicleType);
+            return View(vehicleTypeViewModel);
         }
 
         [HttpPost]
-        public IActionResult Update(VehicleTypeModel vehicleTypeModel)
+        public IActionResult Update(VehicleTypeViewModel vehicleTypeModel)
         {
             if (ModelState.IsValid)
             {
-                var vehicleType = _mapper.Map<VehicleType>(vehicleTypeModel);
-                _repository.Update(vehicleType);
+                var vehicleType = _mapper.Map<VehicleTypeDto>(vehicleTypeModel);
+                _vehicleTypeServicec.Update(vehicleType);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
         [ActionName("Delete")]
         public IActionResult ConfirmDelete(int id)
         {
-            var vehicleType = _repository.GetItem(id);
+            var vehicleType = _vehicleTypeServicec.GetItem(id);
 
             if (vehicleType is null)
                 return NotFound();
 
-            var vehicleTypeView = _mapper.Map<VehicleTypeModel>(vehicleType);
-            return View(vehicleTypeView);
+            var vehicleTypeViewModel = _mapper.Map<VehicleTypeViewModel>(vehicleType);
+            return View(vehicleTypeViewModel);
         }
 
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            _repository.Delete(id);
-            return RedirectToAction("Index");
+            _vehicleTypeServicec.Delete(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

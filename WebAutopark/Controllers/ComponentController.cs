@@ -1,104 +1,101 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using WebAutopark.BusinessLogic.Models;
-using WebAutopark.Core.Entities;
-using WebAutopark.DataBaseAccess.Repository.Base;
+using WebAutopark.BusinessLogic.DataTransferObject;
+using WebAutopark.BusinessLogic.Services.Base;
+using WebAutopark.Models;
 
 namespace WebAutopark.Controllers
 {
     public class ComponentController : Controller
     {
-        private readonly IRepository<Component> _repository;
+        private readonly IDtoService<ComponentDto> _componentDtoService;
         private readonly IMapper _mapper;
 
-        public ComponentController(IRepository<Component> repository, IMapper mapper)
+        public ComponentController(IDtoService<ComponentDto> componentDtoService, IMapper mapper)
         {
-            _repository = repository;
+            _componentDtoService = componentDtoService;
             _mapper = mapper;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            var componentsList = _repository.GetAllItems();
+            var componentsList = _componentDtoService.GetAllItems();
 
-            return View(_mapper.Map<IEnumerable<ComponentModel>>(componentsList));
+            var componentViewModel = _mapper.Map<IEnumerable<ComponentViewModel>>(componentsList);
+            return View(componentViewModel);
         }
 
         [HttpGet]
         public IActionResult Info(int id)
         {
-            var component = _repository.GetItem(id);
+            var component = _componentDtoService.GetItem(id);
 
             if (component is null)
                 return NotFound();
 
-            var componentModel = _mapper.Map<ComponentModel>(component);
-
-            return View(componentModel);
+            var componentViewModel = _mapper.Map<ComponentViewModel>(component);
+            return View(componentViewModel);
         }
 
         public IActionResult Create() => View();
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(ComponentModel componentModel)
+        public IActionResult Create(ComponentViewModel componentViewModel)
         {
             if (ModelState.IsValid)
             {
-                var component = _mapper.Map<Component>(componentModel);
-                _repository.Create(component);
-
-                return RedirectToAction("Index");
+                var component = _mapper.Map<ComponentDto>(componentViewModel);
+                _componentDtoService.Create(component);
             }
 
-            return View(componentModel);
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
         public IActionResult Update(int id)
         {
-            var component = _repository.GetItem(id);
+            var component = _componentDtoService.GetItem(id);
 
             if (component is null)
-            {
-                NotFound();
-            }
+               return NotFound();
 
-            return View(_mapper.Map<ComponentModel>(component));
+            var componentViewModel = _mapper.Map<ComponentViewModel>(component);
+            return View(componentViewModel);
         }
 
         [HttpPost]
-        public IActionResult Update(ComponentModel componentModel)
+        public IActionResult Update(ComponentViewModel componentModel)
         {
             if (ModelState.IsValid)
             {
-                var component = _mapper.Map<Component>(componentModel);
-                _repository.Update(component);
+                var component = _mapper.Map<ComponentDto>(componentModel);
+                _componentDtoService.Update(component);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
         [ActionName("Delete")]
         public IActionResult ConfirmDelete(int id)
         {
-            var component = _repository.GetItem(id);
+            var component = _componentDtoService.GetItem(id);
 
             if (component is null)
                 return NotFound();
 
-            var componentView = _mapper.Map<ComponentModel>(component);
-            return View(componentView);
+            var componentViewModel = _mapper.Map<ComponentViewModel>(component);
+            return View(componentViewModel);
         }
 
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            _repository.Delete(id);
-            return RedirectToAction("Index");
+            _componentDtoService.Delete(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }
