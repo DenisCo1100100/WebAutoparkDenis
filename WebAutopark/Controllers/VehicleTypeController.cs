@@ -9,18 +9,18 @@ namespace WebAutopark.Controllers
 {
     public class VehicleTypeController : Controller
     {
-        private readonly IDtoService<VehicleTypeDto> _vehicleTypeServicec;
+        private readonly IDataService<VehicleTypeDto> _vehicleTypeService;
         private readonly IMapper _mapper;
 
-        public VehicleTypeController(IDtoService<VehicleTypeDto> vehicleTypeServicec, IMapper mapper)
+        public VehicleTypeController(IDataService<VehicleTypeDto> vehicleTypeServicec, IMapper mapper)
         {
-            _vehicleTypeServicec = vehicleTypeServicec;
+            _vehicleTypeService = vehicleTypeServicec;
             _mapper = mapper;
         }
 
         public IActionResult Index()
         {
-            var vehicleTypeList = _vehicleTypeServicec.GetAllItems();
+            var vehicleTypeList = _vehicleTypeService.GetAllItems();
 
             var vehicleTypeViewModel = _mapper.Map<IEnumerable<VehicleTypeViewModel>>(vehicleTypeList);
             return View(vehicleTypeViewModel);
@@ -29,25 +29,25 @@ namespace WebAutopark.Controllers
         [HttpGet]
         public IActionResult Info(int id)
         {
-            var vehicleType = _vehicleTypeServicec.GetItem(id);
+            var vehicleTypeDto = _vehicleTypeService.GetItem(id);
 
-            if (vehicleType is null)
+            if (vehicleTypeDto is null)
                 return NotFound();
 
-            var vehicleTypeModel = _mapper.Map<VehicleTypeViewModel>(vehicleType);
-            return View(vehicleTypeModel);
+            var vehicleTypeViewModel = _mapper.Map<VehicleTypeViewModel>(vehicleTypeDto);
+            return View(vehicleTypeViewModel);
         }
 
         public IActionResult Create() => View();
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(VehicleTypeViewModel vehicleTypeModel)
+        public IActionResult Create(VehicleTypeViewModel vehicleTypeViewModel)
         {
             if (ModelState.IsValid)
             {
-                var vehicleType = _mapper.Map<VehicleTypeDto>(vehicleTypeModel);
-                _vehicleTypeServicec.Create(vehicleType);
+                var vehicleTypeDto = _mapper.Map<VehicleTypeDto>(vehicleTypeViewModel);
+                _vehicleTypeService.Create(vehicleTypeDto);
             }
 
             return RedirectToAction(nameof(Index));
@@ -56,22 +56,22 @@ namespace WebAutopark.Controllers
         [HttpGet]
         public IActionResult Update(int id)
         {
-            var vehicleType = _vehicleTypeServicec.GetItem(id);
+            var vehicleTypeDto = _vehicleTypeService.GetItem(id);
 
-            if (vehicleType is null)
+            if (vehicleTypeDto is null)
                 return NotFound();
 
-            var vehicleTypeViewModel = _mapper.Map<VehicleTypeViewModel>(vehicleType);
+            var vehicleTypeViewModel = _mapper.Map<VehicleTypeViewModel>(vehicleTypeDto);
             return View(vehicleTypeViewModel);
         }
 
         [HttpPost]
-        public IActionResult Update(VehicleTypeViewModel vehicleTypeModel)
+        public IActionResult Update(VehicleTypeViewModel vehicleTypeViewModel)
         {
             if (ModelState.IsValid)
             {
-                var vehicleType = _mapper.Map<VehicleTypeDto>(vehicleTypeModel);
-                _vehicleTypeServicec.Update(vehicleType);
+                var vehicleTypeDto = _mapper.Map<VehicleTypeDto>(vehicleTypeViewModel);
+                _vehicleTypeService.Update(vehicleTypeDto);
             }
 
             return RedirectToAction(nameof(Index));
@@ -81,19 +81,19 @@ namespace WebAutopark.Controllers
         [ActionName("Delete")]
         public IActionResult ConfirmDelete(int id)
         {
-            var vehicleType = _vehicleTypeServicec.GetItem(id);
+            var vehicleTypeDto = _vehicleTypeService.GetItem(id);
 
-            if (vehicleType is null)
+            if (vehicleTypeDto is null)
                 return NotFound();
 
-            var vehicleTypeViewModel = _mapper.Map<VehicleTypeViewModel>(vehicleType);
+            var vehicleTypeViewModel = _mapper.Map<VehicleTypeViewModel>(vehicleTypeDto);
             return View(vehicleTypeViewModel);
         }
 
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            _vehicleTypeServicec.Delete(id);
+            _vehicleTypeService.Delete(id);
             return RedirectToAction(nameof(Index));
         }
     }

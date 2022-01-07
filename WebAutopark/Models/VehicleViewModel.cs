@@ -12,18 +12,20 @@ namespace WebAutopark.Models
         public int VehicleTypeId { get; set; }
 
         [Required]
+        [StringLength(50, MinimumLength = 3)]
         public string Model { get; set; }
 
         [Required]
+        [StringLength(50, MinimumLength = 3)]
         public string RegistrationNumber { get; set; }
 
-        [Range(0, int.MaxValue)] 
+        [Range(0d, int.MaxValue)] 
         public int Year { get; set; }
 
-        [Range(0, double.MaxValue)] 
+        [Range(0d, double.MaxValue)] 
         public double Weight { get; set; }
 
-        [Range(0, double.MaxValue)] 
+        [Range(0d, double.MaxValue)] 
         public double Mileage { get; set; }
 
         [Required] 

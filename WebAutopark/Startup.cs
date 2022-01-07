@@ -23,7 +23,7 @@ namespace WebAutopark
             services.AddRepositories();
 
             services.AddDtoServices();
-            services.AddAutoMapper(typeof(DtoEntitieProfile), typeof(DtoViewModelProfile));
+            services.AddAutoMapper(typeof(DtoEntityProfile), typeof(DtoViewModelProfile));
 
             services.AddHttpContextAccessor();
             services.AddControllersWithViews();

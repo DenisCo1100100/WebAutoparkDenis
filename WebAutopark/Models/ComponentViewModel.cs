@@ -8,6 +8,7 @@ namespace WebAutopark.Models
         public int ComponentId { get; set; }
 
         [Required]
+        [StringLength(50, MinimumLength = 3)]
         public string Name { get; set; }
     }
 }

@@ -4,9 +4,9 @@ using WebAutopark.Core.Entities;
 
 namespace WebAutopark.BusinessLogic.MapperProfiles
 {
-    public class DtoEntitieProfile : Profile
+    public class DtoEntityProfile : Profile
     {
-        public DtoEntitieProfile() 
+        public DtoEntityProfile() 
         {
             CreateMap<ComponentDto, Component>().ReverseMap();
             CreateMap<VehicleTypeDto, VehicleType>().ReverseMap();

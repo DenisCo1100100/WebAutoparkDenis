@@ -5,7 +5,7 @@ using WebAutopark.DataBaseAccess.Repository.Base;
 
 namespace WebAutopark.BusinessLogic.Base.Services
 {
-    public abstract class BaseService<TDto, TEntity> : IDtoService<TDto>
+    public abstract class BaseService<TDto, TEntity> : IDataService<TDto>
         where TDto : class
         where TEntity : class
     {
@@ -32,7 +32,7 @@ namespace WebAutopark.BusinessLogic.Base.Services
         public IEnumerable<TDto> GetAllItems()
         {
             var entities = _repository.GetAllItems();
-            var dtoItems = _mapper.Map<List<TDto>>(entities);
+            var dtoItems = _mapper.Map<IEnumerable<TDto>>(entities);
             return dtoItems;
         }
 

@@ -2,7 +2,7 @@
 
 namespace WebAutopark.BusinessLogic.Services.Base
 {
-    public interface IDtoService<T>
+    public interface IDataService<T>
     {
         IEnumerable<T> GetAllItems();
         T GetItem(int id);

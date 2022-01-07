@@ -9,10 +9,10 @@ namespace WebAutopark.Controllers
 {
     public class VehicleController : Controller
     {
-        private readonly IDtoService<VehicleDto> _vehicleDtoService;
+        private readonly IDataService<VehicleDto> _vehicleDtoService;
         private readonly IMapper _mapper;
 
-        public VehicleController(IDtoService<VehicleDto> vehicleDtoService, IMapper mapper)
+        public VehicleController(IDataService<VehicleDto> vehicleDtoService, IMapper mapper)
         {
             _vehicleDtoService = vehicleDtoService;
             _mapper = mapper;
@@ -21,22 +21,22 @@ namespace WebAutopark.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var vehicleList = _vehicleDtoService.GetAllItems();
+            var vehicleListDto = _vehicleDtoService.GetAllItems();
 
-            var vehicleViewModel = _mapper.Map<IEnumerable<VehicleViewModel>>(vehicleList);
+            var vehicleViewModel = _mapper.Map<IEnumerable<VehicleViewModel>>(vehicleListDto);
             return View(vehicleViewModel);
         }
 
         [HttpGet]
         public IActionResult Info(int id)
         {
-            var vehicle = _vehicleDtoService.GetItem(id);
+            var vehicleListDto = _vehicleDtoService.GetItem(id);
 
-            if (vehicle is null)
+            if (vehicleListDto is null)
                 return NotFound();
 
-            var vehicleModel = _mapper.Map<VehicleViewModel>(vehicle);
-            return View(vehicleModel);
+            var vehicleViewModel = _mapper.Map<VehicleViewModel>(vehicleListDto);
+            return View(vehicleViewModel);
         }
 
 
@@ -44,12 +44,12 @@ namespace WebAutopark.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(VehicleViewModel vehicleModel)
+        public IActionResult Create(VehicleViewModel vehicleViewModel)
         {
             if (ModelState.IsValid)
             {
-                var vehicle = _mapper.Map<VehicleDto>(vehicleModel);
-                _vehicleDtoService.Create(vehicle);
+                var vehicleListDto = _mapper.Map<VehicleDto>(vehicleViewModel);
+                _vehicleDtoService.Create(vehicleListDto);
             }
 
             return RedirectToAction(nameof(Index));
@@ -58,22 +58,22 @@ namespace WebAutopark.Controllers
         [HttpGet]
         public IActionResult Update(int id)
         {
-            var vehicle = _vehicleDtoService.GetItem(id);
+            var vehicleDto = _vehicleDtoService.GetItem(id);
 
-            if (vehicle is null)
+            if (vehicleDto is null)
                 return NotFound();
 
-            var vehicleViewModel = _mapper.Map<VehicleViewModel>(vehicle);
+            var vehicleViewModel = _mapper.Map<VehicleViewModel>(vehicleDto);
             return View(vehicleViewModel);
         }
 
         [HttpPost]
-        public IActionResult Update(VehicleViewModel vehicleModel)
+        public IActionResult Update(VehicleViewModel vehicleViewModel)
         {
             if (ModelState.IsValid)
             {
-                var vehicle = _mapper.Map<VehicleDto>(vehicleModel);
-                _vehicleDtoService.Update(vehicle);
+                var vehicleDto = _mapper.Map<VehicleDto>(vehicleViewModel);
+                _vehicleDtoService.Update(vehicleDto);
             }
 
             return RedirectToAction(nameof(Index));
@@ -83,12 +83,12 @@ namespace WebAutopark.Controllers
         [ActionName("Delete")]
         public IActionResult ConfirmDelete(int id)
         {
-            var vehicle = _vehicleDtoService.GetItem(id);
+            var vehicleDto = _vehicleDtoService.GetItem(id);
 
-            if (vehicle is null)
+            if (vehicleDto is null)
                 return NotFound();
 
-            var vehicleViewModel = _mapper.Map<VehicleViewModel>(vehicle);
+            var vehicleViewModel = _mapper.Map<VehicleViewModel>(vehicleDto);
             return View(vehicleViewModel);
         }
 

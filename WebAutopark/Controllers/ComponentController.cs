@@ -9,10 +9,10 @@ namespace WebAutopark.Controllers
 {
     public class ComponentController : Controller
     {
-        private readonly IDtoService<ComponentDto> _componentDtoService;
+        private readonly IDataService<ComponentDto> _componentDtoService;
         private readonly IMapper _mapper;
 
-        public ComponentController(IDtoService<ComponentDto> componentDtoService, IMapper mapper)
+        public ComponentController(IDataService<ComponentDto> componentDtoService, IMapper mapper)
         {
             _componentDtoService = componentDtoService;
             _mapper = mapper;
@@ -30,12 +30,12 @@ namespace WebAutopark.Controllers
         [HttpGet]
         public IActionResult Info(int id)
         {
-            var component = _componentDtoService.GetItem(id);
+            var componentDto = _componentDtoService.GetItem(id);
 
-            if (component is null)
+            if (componentDto is null)
                 return NotFound();
 
-            var componentViewModel = _mapper.Map<ComponentViewModel>(component);
+            var componentViewModel = _mapper.Map<ComponentViewModel>(componentDto);
             return View(componentViewModel);
         }
 
@@ -47,8 +47,8 @@ namespace WebAutopark.Controllers
         {
             if (ModelState.IsValid)
             {
-                var component = _mapper.Map<ComponentDto>(componentViewModel);
-                _componentDtoService.Create(component);
+                var componentDto = _mapper.Map<ComponentDto>(componentViewModel);
+                _componentDtoService.Create(componentDto);
             }
 
             return RedirectToAction(nameof(Index));
@@ -57,12 +57,12 @@ namespace WebAutopark.Controllers
         [HttpGet]
         public IActionResult Update(int id)
         {
-            var component = _componentDtoService.GetItem(id);
+            var componentDto = _componentDtoService.GetItem(id);
 
-            if (component is null)
+            if (componentDto is null)
                return NotFound();
 
-            var componentViewModel = _mapper.Map<ComponentViewModel>(component);
+            var componentViewModel = _mapper.Map<ComponentViewModel>(componentDto);
             return View(componentViewModel);
         }
 
@@ -71,8 +71,8 @@ namespace WebAutopark.Controllers
         {
             if (ModelState.IsValid)
             {
-                var component = _mapper.Map<ComponentDto>(componentModel);
-                _componentDtoService.Update(component);
+                var componentDto = _mapper.Map<ComponentDto>(componentModel);
+                _componentDtoService.Update(componentDto);
             }
 
             return RedirectToAction(nameof(Index));
@@ -82,12 +82,12 @@ namespace WebAutopark.Controllers
         [ActionName("Delete")]
         public IActionResult ConfirmDelete(int id)
         {
-            var component = _componentDtoService.GetItem(id);
+            var componentDto = _componentDtoService.GetItem(id);
 
-            if (component is null)
+            if (componentDto is null)
                 return NotFound();
 
-            var componentViewModel = _mapper.Map<ComponentViewModel>(component);
+            var componentViewModel = _mapper.Map<ComponentViewModel>(componentDto);
             return View(componentViewModel);
         }
 
