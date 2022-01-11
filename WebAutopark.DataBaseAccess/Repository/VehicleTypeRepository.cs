@@ -8,7 +8,7 @@ namespace WebAutopark.DataBaseAccess.Repository
 {
     public class VehicleTypeRepository : RepositoryBase, IRepository<VehicleType>
     {
-        private readonly string QueryCreate = "INSERT INTO VehicleTypes (Name) VALUES (@Name)";
+        private readonly string QueryCreate = "INSERT INTO VehicleTypes (Name, TaxCoefficient) VALUES (@Name, @TaxCoefficient)";
 
         private readonly string QueryDelete = "DELETE FROM VehicleTypes WHERE VehicleTypeId = @id";
 
@@ -16,12 +16,12 @@ namespace WebAutopark.DataBaseAccess.Repository
 
         private readonly string QueryGetAll = "SELECT * FROM VehicleTypes";
 
-        private readonly string QueryUpdate = "UPDATE VehicleTypes SET Name = @Name WHERE VehicleTypeId = @VehicleTypeId";
+        private readonly string QueryUpdate = "UPDATE VehicleTypes SET Name = @Name, TaxCoefficient = @TaxCoefficient WHERE VehicleTypeId = @VehicleTypeId";
 
         public VehicleTypeRepository(IConnectionStringProvider connectionStringProvider) : base(connectionStringProvider) { }
 
         public void Create(VehicleType item) => Connection.Execute(QueryCreate, item);
-        public void Delete(int id) => Connection.Execute(QueryDelete, id);
+        public void Delete(int id) => Connection.Execute(QueryDelete, new { id });
         public IEnumerable<VehicleType> GetAllItems() => Connection.Query<VehicleType>(QueryGetAll).AsList();
         public VehicleType GetItem(int id) => Connection.QueryFirstOrDefault<VehicleType>(QueryGet, new { id });
         public void Update(VehicleType item) => Connection.Execute(QueryUpdate, item);

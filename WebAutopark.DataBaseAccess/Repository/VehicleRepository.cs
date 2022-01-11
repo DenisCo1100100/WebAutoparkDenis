@@ -17,20 +17,20 @@ namespace WebAutopark.DataBaseAccess.Repository
 
         private readonly string QueryGetAll = "SELECT * FROM Vehicles";
 
-        private readonly string QueryUpdate = "UPDATE Vehicle SET " +
+        private readonly string QueryUpdate = "UPDATE Vehicles SET " +
                                               "VehicleTypeId = @VehicleTypeId, " +
                                               "Model = @Model, " +
                                               "RegistrationNumber = @RegistrationNumber, " +
                                               "Weight = @Weight, " +
                                               "Year = @Year, " +
                                               "Mileage = @Mileage, " +
-                                              "Color = @Color" +
+                                              "Color = @Color " +
                                               "WHERE VehicleId = @VehicleId";
 
         public VehicleRepository(IConnectionStringProvider connectionStringProvider) : base(connectionStringProvider) { }
 
         public void Create(Vehicle item) => Connection.Execute(QueryCreate, item);
-        public void Delete(int id) => Connection.Execute(QueryDelete, id);
+        public void Delete(int id) => Connection.Execute(QueryDelete, new { id });
         public IEnumerable<Vehicle> GetAllItems() => Connection.Query<Vehicle>(QueryGetAll).AsList();
         public Vehicle GetItem(int id) => Connection.QueryFirstOrDefault<Vehicle>(QueryGet, new { id });
         public void Update(Vehicle item) => Connection.Execute(QueryUpdate, item);

@@ -3,6 +3,16 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome to WebAutopark</h1>
+</div>
+<div class="form-group text-center">
+    <div class="d-inline-block">
+        <a asp-controller="Component" asp-action="Index" class="btn btn-outline-info">Components</a>
+    </div>
+    <div class="d-inline-block">
+        <a asp-controller="VehicleType" asp-action="Index" class="btn btn-outline-info">VehicleType</a>
+    </div>
+    <div class="d-inline-block">
+        <a asp-controller="Vehicle" asp-action="Index" class="btn btn-outline-info">Vehicles</a>
+    </div>
 </div>

@@ -21,7 +21,7 @@ namespace WebAutopark.DataBaseAccess.Repository
         public ComponentRepository(IConnectionStringProvider connectionStringProvider) : base(connectionStringProvider) {}
 
         public void Create(Component item) => Connection.Execute(QueryCreate, item);
-        public void Delete(int id) => Connection.Execute(QueryDelete, id);
+        public void Delete(int id) => Connection.Execute(QueryDelete, new { id });
         public IEnumerable<Component> GetAllItems() => Connection.Query<Component>(QueryGetAll).AsList();
         public Component GetItem(int id) => Connection.QueryFirstOrDefault<Component>(QueryGet, new { id });
         public void Update(Component item) => Connection.Execute(QueryUpdate, item);
