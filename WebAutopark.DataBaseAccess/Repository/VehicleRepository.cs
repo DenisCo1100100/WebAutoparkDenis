@@ -31,7 +31,7 @@ namespace WebAutopark.DataBaseAccess.Repository
 
         public void Create(Vehicle item) => Connection.Execute(QueryCreate, item);
         public void Delete(int id) => Connection.Execute(QueryDelete, new { id });
-        public IEnumerable<Vehicle> GetAllItems() => Connection.Query<Vehicle>(QueryGetAll).AsList();
+        public IEnumerable<Vehicle> GetAllItems() => Connection.Query<Vehicle>(QueryGetAll);
         public Vehicle GetItem(int id) => Connection.QueryFirstOrDefault<Vehicle>(QueryGet, new { id });
         public void Update(Vehicle item) => Connection.Execute(QueryUpdate, item);
     }

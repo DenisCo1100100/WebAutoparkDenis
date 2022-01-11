@@ -66,8 +66,9 @@
                 @item.VehicleTypeId
             </td>
             <td class="form-group text-right">
-                <a asp-controller="Vehicle" asp-action="Update" asp-route-id="@item.VehicleId">Udpate</a>
-                <a asp-controller="Vehicle" asp-action="Delete" asp-route-id="@item.VehicleId">Delete</a>
+                <a asp-controller="Vehicle" asp-action="Update" asp-route-id="@item.VehicleId">Update</a> |
+                <a asp-controller="Vehicle" asp-action="Delete" asp-route-id="@item.VehicleId">Delete</a> |
+                <a asp-controller="Order" asp-action="Create" asp-route-vehicleId="@item.VehicleId">New Order</a>
             </td>
             </tr>
        }
