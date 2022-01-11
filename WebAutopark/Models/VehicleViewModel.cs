@@ -5,11 +5,17 @@ namespace WebAutopark.Models
 {
     public class VehicleViewModel
     {
+        private const double WeightCoefficient = 0.0013d;
+        private const double TaxCoefficient = 30d;
+        private const double TaxPerMonthAddition = 5d;
+
         [Required]
         public int VehicleId { get; set; }
 
         [Required]
         public int VehicleTypeId { get; set; }
+
+        public VehicleTypeViewModel VehicleType { get; set; }
 
         [Required]
         [StringLength(50, MinimumLength = 3)]
@@ -30,5 +36,8 @@ namespace WebAutopark.Models
 
         [Required] 
         public ColorType Color { get; set; }
+
+        public double GetCalcTaxPerMonth() => Weight * WeightCoefficient +
+            VehicleType.TaxCoefficient * TaxCoefficient + TaxPerMonthAddition;
     }
 }

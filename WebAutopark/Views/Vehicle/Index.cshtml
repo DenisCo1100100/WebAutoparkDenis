@@ -17,6 +17,9 @@
                 Model
             </th>
             <th>
+                VehicleType
+            </th>
+            <th>
                 Year
             </th>
             <th>
@@ -31,9 +34,6 @@
             <th>
                 Color
             </th>
-            <th>
-                VehicleTypeId
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -46,6 +46,10 @@
             </td>
             <td>
                 @item.Model
+            </td>
+            <td>
+                Id @item.VehicleTypeId ->
+                @item.VehicleType.Name
             </td>
             <td>
                 @item.Year
@@ -62,10 +66,8 @@
             <td>
                 @item.Color
             </td>
-            <td>
-                @item.VehicleTypeId
-            </td>
             <td class="form-group text-right">
+                <a asp-controller="Vehicle" asp-action="Information" asp-route-id="@item.VehicleId">Info</a> |
                 <a asp-controller="Vehicle" asp-action="Update" asp-route-id="@item.VehicleId">Update</a> |
                 <a asp-controller="Vehicle" asp-action="Delete" asp-route-id="@item.VehicleId">Delete</a> |
                 <a asp-controller="Order" asp-action="Create" asp-route-vehicleId="@item.VehicleId">New Order</a>

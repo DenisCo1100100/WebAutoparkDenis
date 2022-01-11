@@ -28,7 +28,7 @@ namespace WebAutopark.Controllers
         }
 
         [HttpGet]
-        public IActionResult Info(int id)
+        public IActionResult Information(int id)
         {
             var vehicleListDto = _vehicleDtoService.GetItem(id);
 

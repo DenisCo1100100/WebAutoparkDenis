@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using System.Collections.Generic;
+using System.Linq;
 using WebAutopark.Core.Entities;
 using WebAutopark.DataBaseAccess.Repository.Base;
 using WebAutopark.DataBaseAccess.Services;
@@ -13,9 +14,14 @@ namespace WebAutopark.DataBaseAccess.Repository
 
         private readonly string QueryDelete = "DELETE FROM Vehicles WHERE VehicleId = @id";
 
-        private readonly string QueryGet = "SELECT * FROM Vehicles WHERE VehicleId = @id";
+        private readonly string QueryGet = "SELECT V.*, VT.VehicleTypeId AS VTId, VT.Name, VT.TaxCoefficient " +
+                                           "FROM Vehicles AS V " +
+                                           "INNER JOIN VehicleTypes AS VT ON V.VehicleTypeId = VT.VehicleTypeId " +
+                                           "WHERE V.VehicleId = @id";
 
-        private readonly string QueryGetAll = "SELECT * FROM Vehicles";
+        private readonly string QueryGetAll = "SELECT V.*, VT.VehicleTypeId AS VTId, VT.Name, VT.TaxCoefficient " +
+                                              "FROM Vehicles AS V " +
+                                              "INNER JOIN VehicleTypes AS VT ON V.VehicleTypeId = VT.VehicleTypeId";
 
         private readonly string QueryUpdate = "UPDATE Vehicles SET " +
                                               "VehicleTypeId = @VehicleTypeId, " +
@@ -31,8 +37,32 @@ namespace WebAutopark.DataBaseAccess.Repository
 
         public void Create(Vehicle item) => Connection.Execute(QueryCreate, item);
         public void Delete(int id) => Connection.Execute(QueryDelete, new { id });
-        public IEnumerable<Vehicle> GetAllItems() => Connection.Query<Vehicle>(QueryGetAll);
-        public Vehicle GetItem(int id) => Connection.QueryFirstOrDefault<Vehicle>(QueryGet, new { id });
+        public IEnumerable<Vehicle> GetAllItems() => 
+            Connection.Query<Vehicle, VehicleType, Vehicle>
+            (
+                QueryGetAll, (vehicle, vehicleType) =>
+                {
+                    vehicle.VehicleType = vehicleType;
+                    return vehicle;
+                },
+                splitOn: "VTId"
+            );
+
+        public Vehicle GetItem(int id)
+        {
+            var collection = Connection.Query<Vehicle, VehicleType, Vehicle>(QueryGet,
+                (vehicle, vehicleType) =>
+                {
+                    vehicle.VehicleType = vehicleType;
+                    return vehicle;
+                },
+                splitOn: "VTId",
+                param: new { id }
+            );
+
+            return collection.First();
+        }
+
         public void Update(Vehicle item) => Connection.Execute(QueryUpdate, item);
     }
 }

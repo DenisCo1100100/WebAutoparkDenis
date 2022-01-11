@@ -4,6 +4,7 @@
     {
         public int VehicleId { get; set; }
         public int VehicleTypeId { get; set; }
+        public VehicleTypeDto VehicleType { get; set; }
         public string Model { get; set; }
         public string RegistrationNumber { get; set; }
         public int Year { get; set; }
