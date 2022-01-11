@@ -33,11 +33,19 @@ namespace WebAutopark.Models
 
         [Range(0d, double.MaxValue)] 
         public double Mileage { get; set; }
+        
+        [Range(1d, double.MaxValue)]
+        public double FuelConsumption { get; set; }
+
+        [Range(1d, double.MaxValue)]
+        public double TankCapacity { get; set; }
 
         [Required] 
         public ColorType Color { get; set; }
 
         public double GetCalcTaxPerMonth() => Weight * WeightCoefficient +
             VehicleType.TaxCoefficient * TaxCoefficient + TaxPerMonthAddition;
+
+        public double GetCalcMaxKm() => (TankCapacity / FuelConsumption) * 100;
     }
 }

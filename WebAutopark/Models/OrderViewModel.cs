@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace WebAutopark.Models
@@ -10,7 +11,6 @@ namespace WebAutopark.Models
 
         [Required] 
         public int VehicleId { get; set; }
-
-        public IEnumerable<OrderItemViewModel> OrderItems { get; set; }
+        public DateTime Date { get; set; }
     }
 }

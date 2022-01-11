@@ -10,6 +10,8 @@
         public int Year { get; set; }
         public double Weight { get; set; }
         public double Mileage { get; set; }
+        public double FuelConsumption { get; set; }
+        public double TankCapacity { get; set; }
         public ColorType Color { get; set; }
     }
 }

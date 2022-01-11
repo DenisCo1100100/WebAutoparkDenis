@@ -38,8 +38,8 @@
         </tr>
     </thead>
     <tbody>
-       @foreach (var item in Model)
-       {
+        @foreach (var item in Model)
+        {
             <tr>
             <td>
                 @item.VehicleId
@@ -73,7 +73,7 @@
                 <a asp-controller="Order" asp-action="Create" asp-route-vehicleId="@item.VehicleId">New Order</a>
             </td>
             </tr>
-       }
+        }
     </tbody>
 </table>
 <p class="form-group text-center">

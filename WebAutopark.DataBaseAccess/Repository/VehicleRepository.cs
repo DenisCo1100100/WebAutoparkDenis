@@ -9,8 +9,8 @@ namespace WebAutopark.DataBaseAccess.Repository
 {
     public class VehicleRepository : RepositoryBase, IRepository<Vehicle>
     {
-        private readonly string QueryCreate = "INSERT INTO Vehicles (VehicleTypeId, Model, RegistrationNumber, Weight, Year, Mileage, Color) " +
-                                              "VALUES (@VehicleTypeId, @Model, @RegistrationNumber, @Weight, @Year, @Mileage, @Color)";
+        private readonly string QueryCreate = "INSERT INTO Vehicles (VehicleTypeId, Model, RegistrationNumber, Weight, Year, Mileage, FuelConsumption, TankCapacity, Color) " +
+                                              "VALUES (@VehicleTypeId, @Model, @RegistrationNumber, @Weight, @Year, @Mileage, @FuelConsumption, @TankCapacity, @Color)";
 
         private readonly string QueryDelete = "DELETE FROM Vehicles WHERE VehicleId = @id";
 
@@ -30,6 +30,8 @@ namespace WebAutopark.DataBaseAccess.Repository
                                               "Weight = @Weight, " +
                                               "Year = @Year, " +
                                               "Mileage = @Mileage, " +
+                                              "FuelConsumption = @FuelConsumption, " +
+                                              "TankCapacity = @TankCapacity, " +
                                               "Color = @Color " +
                                               "WHERE VehicleId = @VehicleId";
 

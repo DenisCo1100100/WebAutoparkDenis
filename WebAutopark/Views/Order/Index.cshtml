@@ -17,6 +17,9 @@
         <th>
             VehicleId
         </th>
+        <th>
+            Date
+        </th>
         <th></th>
     </tr>
     </thead>
@@ -29,6 +32,9 @@
             </td>
             <td>
                 @item.VehicleId
+            </td>
+            <td>
+                @item.Date
             </td>
             <td class="form-group text-right">
                 <a asp-controller="OrderItem" asp-action="Index" asp-route-orderId="@item.OrderId">Info</a> |

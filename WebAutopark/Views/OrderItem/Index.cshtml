@@ -29,28 +29,27 @@
     </thead>
     <tbody>
        @foreach (var item in Model)
-        {
-           <tr>
-               <td>
-                   @item.OrderId
-               </td>
-               <td>
-                   @item.OrderItemId
-               </td>
-               <td>
-                   @item.ComponentId
-               </td>
-               <td>
-                   @item.Component.Name
-               </td>
-               <td>    
-                   @item.Quantity
-               </td>
-           </tr>
-        }
+       {
+          <tr>
+             <td>
+                 @item.OrderId
+             </td>
+             <td>
+                 @item.OrderItemId
+             </td>
+             <td>
+                 @item.ComponentId
+             </td>
+             <td>
+                 @item.Component.Name
+             </td>
+             <td>    
+                 @item.Quantity
+             </td>
+          </tr>
+       }
     </tbody>
 </table>
-
 <div class="form-group text-center">    
     <a asp-controller="Order" asp-action="Index">Back to orders list</a>
 </div>

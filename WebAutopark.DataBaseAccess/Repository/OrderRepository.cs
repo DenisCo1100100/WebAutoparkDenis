@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using System;
 using System.Collections.Generic;
 using WebAutopark.Core.Entities;
 using WebAutopark.DataBaseAccess.Repository.Base;
@@ -8,9 +9,9 @@ namespace WebAutopark.DataBaseAccess.Repository
 {
     public class OrderRepository : RepositoryBase, IOrderRepository
     {
-        private readonly string QueryCreate = "INSERT INTO Orders (VehicleId) VALUES (@VehicleId)";
+        private readonly string QueryCreate = "INSERT INTO Orders (VehicleId, Date) VALUES (@VehicleId, @Date)";
 
-        private readonly string QueryCreateOrder = "INSERT INTO Orders(VehicleId) OUTPUT Inserted.OrderId, Inserted.VehicleId VALUES(@VehicleId) ";
+        private readonly string QueryCreateOrder = "INSERT INTO Orders(VehicleId, Date) OUTPUT Inserted.OrderId, Inserted.VehicleId, Inserted.Date VALUES(@VehicleId, @Date) ";
 
         private readonly string QueryDelete = "DELETE FROM Orders WHERE OrderId = @id";
 
@@ -18,7 +19,7 @@ namespace WebAutopark.DataBaseAccess.Repository
 
         private readonly string QueryGetAll = "SELECT * FROM Orders";
 
-        private readonly string QueryUpdate = "UPDATE Orders SET VehicleId = @VehicleId WHERE OrderId = @OrderId";
+        private readonly string QueryUpdate = "UPDATE Orders SET VehicleId, Date = @VehicleId, @Date WHERE OrderId = @OrderId";
 
         public OrderRepository(IConnectionStringProvider connectionStringProvider) : base(connectionStringProvider) { }
 
@@ -28,7 +29,8 @@ namespace WebAutopark.DataBaseAccess.Repository
         {
             var order = new
             {
-                VehicleId = vehicleId
+                VehicleId = vehicleId,
+                Date = DateTime.UtcNow
             };
 
             return Connection.QueryFirstOrDefault<Order>(QueryCreateOrder, order);
