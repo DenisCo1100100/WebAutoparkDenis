@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using WebAutopark.Core.Entities;
+using WebAutopark.Core.Enums;
 using WebAutopark.DataBaseAccess.Repository.Base;
 using WebAutopark.DataBaseAccess.Services;
 
 namespace WebAutopark.DataBaseAccess.Repository
 {
-    public class VehicleRepository : RepositoryBase, IRepository<Vehicle>
+    public class VehicleRepository : RepositoryBase, IVehicleRepository
     {
         private readonly string QueryCreate = "INSERT INTO Vehicles (VehicleTypeId, Model, RegistrationNumber, Weight, Year, Mileage, FuelConsumption, TankCapacity, Color) " +
                                               "VALUES (@VehicleTypeId, @Model, @RegistrationNumber, @Weight, @Year, @Mileage, @FuelConsumption, @TankCapacity, @Color)";
@@ -37,18 +38,33 @@ namespace WebAutopark.DataBaseAccess.Repository
 
         public VehicleRepository(IConnectionStringProvider connectionStringProvider) : base(connectionStringProvider) { }
 
+        private static string GetVehicleSortString(SortCriteria sortCriteria) => sortCriteria switch
+        {
+            SortCriteria.Name => "V.Model",
+            SortCriteria.Type => "VT.Name",
+            SortCriteria.Mileage => "V.Mileage",
+            _ => "V.VehicleId",
+        };
+
         public void Create(Vehicle item) => Connection.Execute(QueryCreate, item);
         public void Delete(int id) => Connection.Execute(QueryDelete, new { id });
-        public IEnumerable<Vehicle> GetAllItems() => 
-            Connection.Query<Vehicle, VehicleType, Vehicle>
+        public IEnumerable<Vehicle> GetAllItems(SortCriteria sortCriteria, bool isAscending = true)
+        {
+            var getSorted = isAscending ? $"{QueryGetAll} ORDER BY {GetVehicleSortString(sortCriteria)} ASC" :
+                                          $"{QueryGetAll} ORDER BY {GetVehicleSortString(sortCriteria)} DESC";
+
+            return Connection.Query<Vehicle, VehicleType, Vehicle>
             (
-                QueryGetAll, (vehicle, vehicleType) =>
+                getSorted, (vehicle, vehicleType) =>
                 {
                     vehicle.VehicleType = vehicleType;
                     return vehicle;
                 },
                 splitOn: "VTId"
             );
+        }
+
+        public IEnumerable<Vehicle> GetAllItems() => GetAllItems(SortCriteria.Id);
 
         public Vehicle GetItem(int id)
         {

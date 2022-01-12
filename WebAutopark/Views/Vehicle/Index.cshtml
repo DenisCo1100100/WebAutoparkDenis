@@ -7,6 +7,23 @@
 <hr />
 <h4 class="text-center my-1">VEHICLES LIST</h4>
 <hr />
+
+<form method="get">
+ <div class="form-inline form-group">
+            <label class="control-label mr-3">Sort criteria: </label>
+            <select name="sortCriteria" class="form-control mr-2" id="sortCriteria">
+                <option selected value="1">Id</option>
+                <option value="2">Name</option>
+                <option value="3">Type</option>
+                <option value="4">Mileage</option>
+            </select>
+            <label class="control-label mr-1">Is ascending:</label>
+            <input type="checkbox" name="isAscending" value="true" id="isAscending"/>
+
+            <input type="submit" value="filter" class="btn btn-primary ml-2" id="filter"/>
+        </div>       
+</form>
+
 <table class="table table-striped table-borderless table-sm">
     <thead class="thead-light">
         <tr>
