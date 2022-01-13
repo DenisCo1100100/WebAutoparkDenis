@@ -19,7 +19,7 @@ namespace WebAutopark.BusinessLogic.Services
             _vehicleRepository = repository;
         }
 
-        IEnumerable<VehicleDto> IVehicleService.GetAllItems(SortCriteria sortCriteria, bool isAscending)
+        public IEnumerable<VehicleDto> GetAllItems(SortCriteria sortCriteria, bool isAscending)
         {
             var vehicles = _vehicleRepository.GetAllItems(sortCriteria, isAscending);
             var vehiclesDto = _mapper.Map<IEnumerable<VehicleDto>>(vehicles);

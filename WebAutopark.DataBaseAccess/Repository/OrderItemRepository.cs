@@ -9,19 +9,19 @@ namespace WebAutopark.DataBaseAccess.Repository
 {
     public class OrderItemRepository : RepositoryBase, IRepository<OrderItem>
     {
-        private readonly string QueryCreate = "INSERT INTO OrderItems (OrderId, ComponentId, Quantity) " +
+        private const string QueryCreate = "INSERT INTO OrderItems (OrderId, ComponentId, Quantity) " +
                                               "VALUES (@OrderId, @ComponentId, @Quantity)";
 
-        private readonly string QueryDelete = "DELETE FROM OrderItems WHERE OrderItemId = @id";
+        private const string QueryDelete = "DELETE FROM OrderItems WHERE OrderItemId = @id";
 
-        private readonly string QueryGet = "SELECT * FROM OrderItems WHERE OrderItemId = @id";
+        private const string QueryGet = "SELECT * FROM OrderItems WHERE OrderItemId = @id";
 
-        private readonly string QueryGetAll = "SELECT OrderItems.*, Components.* " +
+        private const string QueryGetAll = "SELECT OrderItems.*, Components.* " +
                                               "FROM OrderItems INNER JOIN Components " +
                                               "ON OrderItems.ComponentId = Components.ComponentId " +
                                               "ORDER BY OrderItemId";
 
-        private readonly string QueryUpdate = "UPDATE OrderItems SET " +
+        private const string QueryUpdate = "UPDATE OrderItems SET " +
                                               "OrderId = @OrderId, " +
                                               "ComponentId = @ComponentId, " +
                                               "Quantity = @Quantity " +

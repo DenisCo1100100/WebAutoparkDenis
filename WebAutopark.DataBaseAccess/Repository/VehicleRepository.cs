@@ -10,21 +10,21 @@ namespace WebAutopark.DataBaseAccess.Repository
 {
     public class VehicleRepository : RepositoryBase, IVehicleRepository
     {
-        private readonly string QueryCreate = "INSERT INTO Vehicles (VehicleTypeId, Model, RegistrationNumber, Weight, Year, Mileage, FuelConsumption, TankCapacity, Color) " +
+        private const string QueryCreate = "INSERT INTO Vehicles (VehicleTypeId, Model, RegistrationNumber, Weight, Year, Mileage, FuelConsumption, TankCapacity, Color) " +
                                               "VALUES (@VehicleTypeId, @Model, @RegistrationNumber, @Weight, @Year, @Mileage, @FuelConsumption, @TankCapacity, @Color)";
 
-        private readonly string QueryDelete = "DELETE FROM Vehicles WHERE VehicleId = @id";
+        private const string QueryDelete = "DELETE FROM Vehicles WHERE VehicleId = @id";
 
-        private readonly string QueryGet = "SELECT V.*, VT.VehicleTypeId AS VTId, VT.Name, VT.TaxCoefficient " +
+        private const string QueryGet = "SELECT V.*, VT.VehicleTypeId AS VTId, VT.Name, VT.TaxCoefficient " +
                                            "FROM Vehicles AS V " +
                                            "INNER JOIN VehicleTypes AS VT ON V.VehicleTypeId = VT.VehicleTypeId " +
                                            "WHERE V.VehicleId = @id";
 
-        private readonly string QueryGetAll = "SELECT V.*, VT.VehicleTypeId AS VTId, VT.Name, VT.TaxCoefficient " +
+        private const string QueryGetAll = "SELECT V.*, VT.VehicleTypeId AS VTId, VT.Name, VT.TaxCoefficient " +
                                               "FROM Vehicles AS V " +
                                               "INNER JOIN VehicleTypes AS VT ON V.VehicleTypeId = VT.VehicleTypeId";
 
-        private readonly string QueryUpdate = "UPDATE Vehicles SET " +
+        private const string QueryUpdate = "UPDATE Vehicles SET " +
                                               "VehicleTypeId = @VehicleTypeId, " +
                                               "Model = @Model, " +
                                               "RegistrationNumber = @RegistrationNumber, " +
@@ -37,7 +37,7 @@ namespace WebAutopark.DataBaseAccess.Repository
                                               "WHERE VehicleId = @VehicleId";
 
         public VehicleRepository(IConnectionStringProvider connectionStringProvider) : base(connectionStringProvider) { }
-
+        
         private static string GetVehicleSortString(SortCriteria sortCriteria) => sortCriteria switch
         {
             SortCriteria.Name => "V.Model",

@@ -8,15 +8,15 @@ namespace WebAutopark.DataBaseAccess.Repository
 {
     public class ComponentRepository : RepositoryBase, IRepository<Component>
     {
-        private readonly string QueryCreate = "INSERT INTO Components (Name) VALUES (@Name)";
+        private const string QueryCreate = "INSERT INTO Components (Name) VALUES (@Name)";
 
-        private readonly string QueryDelete = "DELETE FROM Components WHERE ComponentId = @id";
+        private const string QueryDelete = "DELETE FROM Components WHERE ComponentId = @id";
 
-        private readonly string QueryGet = "SELECT * FROM Components WHERE ComponentId = @id";
+        private const string QueryGet = "SELECT * FROM Components WHERE ComponentId = @id";
 
-        private readonly string QueryGetAll = "SELECT * FROM Components";
+        private const string QueryGetAll = "SELECT * FROM Components";
 
-        private readonly string QueryUpdate = "UPDATE Components SET Name = @Name WHERE ComponentId = @ComponentId";
+        private const string QueryUpdate = "UPDATE Components SET Name = @Name WHERE ComponentId = @ComponentId";
 
         public ComponentRepository(IConnectionStringProvider connectionStringProvider) : base(connectionStringProvider) {}
 

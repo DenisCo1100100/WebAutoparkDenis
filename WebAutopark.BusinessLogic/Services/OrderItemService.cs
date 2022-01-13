@@ -14,10 +14,6 @@ namespace WebAutopark.BusinessLogic.Services
         public OrderItemService(IRepository<OrderItem> repository, IMapper mapper) : base(repository, mapper)
         {}
 
-        public IEnumerable<OrderItemDto> GetAllItems(int orderId)
-        {
-            var orderItems = GetAllItems().Where(e => e.OrderId == orderId);
-            return orderItems;
-        }
+        public IEnumerable<OrderItemDto> GetAllItems(int orderId) => GetAllItems().Where(e => e.OrderId == orderId);
     }
 }

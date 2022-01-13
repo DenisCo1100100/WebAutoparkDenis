@@ -9,17 +9,17 @@ namespace WebAutopark.DataBaseAccess.Repository
 {
     public class OrderRepository : RepositoryBase, IOrderRepository
     {
-        private readonly string QueryCreate = "INSERT INTO Orders (VehicleId, Date) VALUES (@VehicleId, @Date)";
+        private const string QueryCreate = "INSERT INTO Orders (VehicleId, Date) VALUES (@VehicleId, @Date)";
 
-        private readonly string QueryCreateOrder = "INSERT INTO Orders(VehicleId, Date) OUTPUT Inserted.OrderId, Inserted.VehicleId, Inserted.Date VALUES(@VehicleId, @Date) ";
+        private const string QueryCreateOrder = "INSERT INTO Orders(VehicleId, Date) OUTPUT Inserted.OrderId, Inserted.VehicleId, Inserted.Date VALUES(@VehicleId, @Date) ";
 
-        private readonly string QueryDelete = "DELETE FROM Orders WHERE OrderId = @id";
+        private const string QueryDelete = "DELETE FROM Orders WHERE OrderId = @id";
 
-        private readonly string QueryGet = "SELECT * FROM Orders WHERE OrderId = @id";
+        private const string QueryGet = "SELECT * FROM Orders WHERE OrderId = @id";
 
-        private readonly string QueryGetAll = "SELECT * FROM Orders";
+        private const string QueryGetAll = "SELECT * FROM Orders";
 
-        private readonly string QueryUpdate = "UPDATE Orders SET VehicleId, Date = @VehicleId, @Date WHERE OrderId = @OrderId";
+        private const string QueryUpdate = "UPDATE Orders SET VehicleId, Date = @VehicleId, @Date WHERE OrderId = @OrderId";
 
         public OrderRepository(IConnectionStringProvider connectionStringProvider) : base(connectionStringProvider) { }
 
