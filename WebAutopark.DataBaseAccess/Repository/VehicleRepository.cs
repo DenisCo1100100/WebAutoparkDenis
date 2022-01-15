@@ -38,14 +38,6 @@ namespace WebAutopark.DataBaseAccess.Repository
 
         public VehicleRepository(IConnectionStringProvider connectionStringProvider) : base(connectionStringProvider) { }
         
-        private static string GetVehicleSortString(SortCriteria sortCriteria) => sortCriteria switch
-        {
-            SortCriteria.Name => "V.Model",
-            SortCriteria.Type => "VT.Name",
-            SortCriteria.Mileage => "V.Mileage",
-            _ => "V.VehicleId",
-        };
-
         public void Create(Vehicle item) => Connection.Execute(QueryCreate, item);
         public void Delete(int id) => Connection.Execute(QueryDelete, new { id });
         public IEnumerable<Vehicle> GetAllItems(SortCriteria sortCriteria, bool isAscending = true)
@@ -82,5 +74,13 @@ namespace WebAutopark.DataBaseAccess.Repository
         }
 
         public void Update(Vehicle item) => Connection.Execute(QueryUpdate, item);
+
+        private static string GetVehicleSortString(SortCriteria sortCriteria) => sortCriteria switch
+        {
+            SortCriteria.Name => "V.Model",
+            SortCriteria.Type => "VT.Name",
+            SortCriteria.Mileage => "V.Mileage",
+            _ => "V.VehicleId",
+        };
     }
 }

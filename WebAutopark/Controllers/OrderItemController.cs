@@ -14,9 +14,7 @@ namespace WebAutopark.Controllers
         private readonly IDataService<ComponentDto> _componentDataService;
         private readonly IMapper _mapper;
 
-        public OrderItemController(IOrderItemService orderItemService,
-            IDataService<ComponentDto> componentDataService,
-            IMapper mapper)
+        public OrderItemController(IOrderItemService orderItemService, IDataService<ComponentDto> componentDataService, IMapper mapper)
         {
             _orderItemService = orderItemService;
             _componentDataService = componentDataService;

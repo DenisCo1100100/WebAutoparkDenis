@@ -38,6 +38,7 @@
             </td>
             <td class="form-group text-right">
                 <a asp-controller="OrderItem" asp-action="Index" asp-route-orderId="@item.OrderId">Info</a> |
+                <a asp-controller="OrderItem" asp-action="Create" asp-route-orderId="@item.OrderId">Add</a> |
                 <a asp-controller="Order" asp-action="Delete" asp-route-orderId="@item.OrderId">Delete</a>
             </td>
         </tr>

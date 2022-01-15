@@ -18,7 +18,7 @@ namespace WebAutopark.BusinessLogic.Extensoins
             services.AddScoped<IRepository<Component>, ComponentRepository>();
             services.AddScoped<IVehicleRepository, VehicleRepository>();
             services.AddScoped<IRepository<VehicleType>, VehicleTypeRepository>();
-            services.AddScoped<IRepository<OrderItem>, OrderItemRepository>();
+            services.AddScoped<IOrderItemRepository, OrderItemRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
 
             return services;

@@ -7,6 +7,6 @@ namespace WebAutopark.BusinessLogic.Services.Interface
 {
     public interface IVehicleService : IDataService<VehicleDto>
     {
-        public IEnumerable<VehicleDto> GetAllItems(SortCriteria sortCriteria, bool isAscending);
+        IEnumerable<VehicleDto> GetAllItems(SortCriteria sortCriteria, bool isAscending);
     }
 }

@@ -7,7 +7,7 @@ using WebAutopark.DataBaseAccess.Services;
 
 namespace WebAutopark.DataBaseAccess.Repository
 {
-    public class OrderItemRepository : RepositoryBase, IRepository<OrderItem>
+    public class OrderItemRepository : RepositoryBase, IOrderItemRepository
     {
         private const string QueryCreate = "INSERT INTO OrderItems (OrderId, ComponentId, Quantity) " +
                                               "VALUES (@OrderId, @ComponentId, @Quantity)";
@@ -19,6 +19,12 @@ namespace WebAutopark.DataBaseAccess.Repository
         private const string QueryGetAll = "SELECT OrderItems.*, Components.* " +
                                               "FROM OrderItems INNER JOIN Components " +
                                               "ON OrderItems.ComponentId = Components.ComponentId " +
+                                              "ORDER BY OrderItemId";
+
+        private const string QueryGetAllItems = "SELECT OrderItems.*, Components.* " +
+                                              "FROM OrderItems INNER JOIN Components " +
+                                              "ON OrderItems.ComponentId = Components.ComponentId " +
+                                              "WHERE OrderId = @orderId " +
                                               "ORDER BY OrderItemId";
 
         private const string QueryUpdate = "UPDATE OrderItems SET " +
@@ -40,6 +46,18 @@ namespace WebAutopark.DataBaseAccess.Repository
                     return orderItem;
                 },
                 splitOn: "ComponentId"
+            );
+
+        public IEnumerable<OrderItem> GetAllItems(int orderId) =>
+            Connection.Query<OrderItem, Component, OrderItem>
+            (
+                QueryGetAllItems, (orderItem, component) =>
+                {
+                    orderItem.Component = component;
+                    return orderItem;
+                },
+                splitOn: "ComponentId",
+                param: new { orderId }
             );
 
         public OrderItem GetItem(int id)
