@@ -2,33 +2,34 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using WebAutopark.BusinessLogic.DataTransferObject;
-using WebAutopark.BusinessLogic.Services.Base;
+using WebAutopark.BusinessLogic.Services.Interface;
+using WebAutopark.Core.Enums;
 using WebAutopark.Models;
 
 namespace WebAutopark.Controllers
 {
     public class VehicleController : Controller
     {
-        private readonly IDataService<VehicleDto> _vehicleDtoService;
+        private readonly IVehicleService _vehicleDtoService;
         private readonly IMapper _mapper;
 
-        public VehicleController(IDataService<VehicleDto> vehicleDtoService, IMapper mapper)
+        public VehicleController(IVehicleService vehicleDtoService, IMapper mapper)
         {
             _vehicleDtoService = vehicleDtoService;
             _mapper = mapper;
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(SortCriteria sortCriteria, bool isAscending)
         {
-            var vehicleListDto = _vehicleDtoService.GetAllItems();
+            var vehicleListDto = _vehicleDtoService.GetAllItems(sortCriteria, isAscending);
 
             var vehicleViewModel = _mapper.Map<IEnumerable<VehicleViewModel>>(vehicleListDto);
             return View(vehicleViewModel);
         }
 
         [HttpGet]
-        public IActionResult Info(int id)
+        public IActionResult Information(int id)
         {
             var vehicleListDto = _vehicleDtoService.GetItem(id);
 
@@ -38,7 +39,6 @@ namespace WebAutopark.Controllers
             var vehicleViewModel = _mapper.Map<VehicleViewModel>(vehicleListDto);
             return View(vehicleViewModel);
         }
-
 
         public IActionResult Create() => View();
 

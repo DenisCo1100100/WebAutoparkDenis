@@ -7,6 +7,23 @@
 <hr />
 <h4 class="text-center my-1">VEHICLES LIST</h4>
 <hr />
+
+<form method="get">
+ <div class="form-inline form-group">
+            <label class="control-label mr-3">Sort criteria: </label>
+            <select name="sortCriteria" class="form-control mr-2" id="sortCriteria">
+                <option selected value="1">Id</option>
+                <option value="2">Name</option>
+                <option value="3">Type</option>
+                <option value="4">Mileage</option>
+            </select>
+            <label class="control-label mr-1">Is ascending:</label>
+            <input type="checkbox" name="isAscending" value="true" id="isAscending"/>
+
+            <input type="submit" value="filter" class="btn btn-primary ml-2" id="filter"/>
+        </div>       
+</form>
+
 <table class="table table-striped table-borderless table-sm">
     <thead class="thead-light">
         <tr>
@@ -15,6 +32,9 @@
             </th>
             <th>
                 Model
+            </th>
+            <th>
+                VehicleType
             </th>
             <th>
                 Year
@@ -31,21 +51,22 @@
             <th>
                 Color
             </th>
-            <th>
-                VehicleTypeId
-            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-       @foreach (var item in Model)
-       {
+        @foreach (var item in Model)
+        {
             <tr>
             <td>
                 @item.VehicleId
             </td>
             <td>
                 @item.Model
+            </td>
+            <td>
+                Id @item.VehicleTypeId ->
+                @item.VehicleType.Name
             </td>
             <td>
                 @item.Year
@@ -62,15 +83,14 @@
             <td>
                 @item.Color
             </td>
-            <td>
-                @item.VehicleTypeId
-            </td>
             <td class="form-group text-right">
-                <a asp-controller="Vehicle" asp-action="Update" asp-route-id="@item.VehicleId">Udpate</a>
-                <a asp-controller="Vehicle" asp-action="Delete" asp-route-id="@item.VehicleId">Delete</a>
+                <a asp-controller="Vehicle" asp-action="Information" asp-route-id="@item.VehicleId">Info</a> |
+                <a asp-controller="Vehicle" asp-action="Update" asp-route-id="@item.VehicleId">Update</a> |
+                <a asp-controller="Vehicle" asp-action="Delete" asp-route-id="@item.VehicleId">Delete</a> |
+                <a asp-controller="Order" asp-action="Create" asp-route-vehicleId="@item.VehicleId">New Order</a>
             </td>
             </tr>
-       }
+        }
     </tbody>
 </table>
 <p class="form-group text-center">

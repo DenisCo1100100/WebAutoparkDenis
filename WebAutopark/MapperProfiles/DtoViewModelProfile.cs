@@ -12,6 +12,8 @@ namespace WebAutopark.MapperProfiles
             CreateMap<ComponentViewModel, ComponentDto>().ReverseMap();
             CreateMap<VehicleTypeViewModel, VehicleTypeDto>().ReverseMap();
             CreateMap<VehicleViewModel, VehicleDto>().ReverseMap();
+            CreateMap<OrderViewModel, OrderDto>().ReverseMap();
+            CreateMap<OrderItemViewModel, OrderItemDto>().ReverseMap();
         }
     }
 }

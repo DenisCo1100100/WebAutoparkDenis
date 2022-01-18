@@ -30,13 +30,14 @@
                     @item.Name
                 </td>
                 <td class="form-group text-right">
-                    <a asp-controller="Component" asp-action="Update" asp-route-id="@item.ComponentId">Udpate</a>
+                    <a asp-controller="Component" asp-action="Update" asp-route-id="@item.ComponentId">Update</a> |
                     <a asp-controller="Component" asp-action="Delete" asp-route-id="@item.ComponentId">Delete</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
 <p class="form-group text-center">
     <a class="btn btn-outline-primary" asp-controller="Component" asp-action="Create">Add Component</a>
 </p>

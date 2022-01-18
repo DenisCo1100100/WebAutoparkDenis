@@ -1,0 +1,55 @@
+﻿@model WebAutopark.Models.VehicleViewModel
+
+<div>
+    <div class="text-center">
+
+        <h4 class="mr-3">@Model.Model</h4>
+
+        <hr class="my-4">
+
+        <div>
+            <h6 class="d-inline-block">Type:</h6>
+            <p class="m-2 d-inline-block">@Model.VehicleType.Name</p>
+        </div>
+
+        <div>
+            <h6 class="d-inline-block">Year:</h6>
+            <p class="m-2 d-inline-block">@Model.Year</p>
+        </div>
+
+        <div>
+            <h6 class="d-inline-block">Mileage:</h6>
+            <p class="m-2 d-inline-block">@Model.Mileage</p>
+        </div>
+
+        <div>
+            <h6 class="d-inline-block">Weight:</h6>
+            <p class="m-2 d-inline-block">@Model.Weight</p>
+        </div>
+
+        <div>
+            <h6 class="d-inline-block">LicensePlate:</h6>
+            <p class="m-2 d-inline-block">@Model.RegistrationNumber</p>
+        </div>       
+
+        <div>
+            <h6 class="d-inline-block">Color:</h6>
+            <p class="m-2 d-inline-block">@Model.Color</p>
+        </div>
+
+        <div>
+            <h6 class="d-inline-block">Tax coefficient per month:</h6>
+            <p class="m-2 d-inline-block">@Model.GetCalcTaxPerMonth()</p>
+        </div>
+        <div>
+            <h6 class="d-inline-block">Max kilometers:</h6>
+            <p class="m-2 d-inline-block">@Model.GetCalcMaxKm()</p>
+        </div>
+
+        <hr class="my-4">
+
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </div>
+</div>

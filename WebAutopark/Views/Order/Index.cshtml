@@ -1,0 +1,47 @@
+﻿@model IEnumerable<WebAutopark.Models.OrderViewModel>
+
+@{
+    ViewData["Title"] = "OrderList";
+}
+
+<hr />
+<h4 class="text-center my-1">ORDERS LIST</h4>
+<hr />
+
+<table class="table text-center">
+    <thead class="thead-light">
+    <tr>
+        <th class="form-group text-left">
+            OrderId
+        </th>
+        <th>
+            VehicleId
+        </th>
+        <th>
+            Date
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td class="form-group text-left">
+                @item.OrderId
+            </td>
+            <td>
+                @item.VehicleId
+            </td>
+            <td>
+                @item.Date
+            </td>
+            <td class="form-group text-right">
+                <a asp-controller="OrderItem" asp-action="Index" asp-route-orderId="@item.OrderId">Info</a> |
+                <a asp-controller="OrderItem" asp-action="Create" asp-route-orderId="@item.OrderId">Add</a> |
+                <a asp-controller="Order" asp-action="Delete" asp-route-orderId="@item.OrderId">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

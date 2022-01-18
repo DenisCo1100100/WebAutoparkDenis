@@ -2,6 +2,7 @@
 using WebAutopark.BusinessLogic.DataTransferObject;
 using WebAutopark.BusinessLogic.Services;
 using WebAutopark.BusinessLogic.Services.Base;
+using WebAutopark.BusinessLogic.Services.Interface;
 using WebAutopark.Core.Entities;
 using WebAutopark.DataBaseAccess.Repository;
 using WebAutopark.DataBaseAccess.Repository.Base;
@@ -15,10 +16,10 @@ namespace WebAutopark.BusinessLogic.Extensoins
         {
             services.AddSingleton<IConnectionStringProvider, ConnectionStringProvider>();
             services.AddScoped<IRepository<Component>, ComponentRepository>();
-            services.AddScoped<IRepository<OrderItem>, OrderItemRepository>();
-            services.AddScoped<IRepository<Order>, OrderRepository>();
-            services.AddScoped<IRepository<Vehicle>, VehicleRepository>();
+            services.AddScoped<IVehicleRepository, VehicleRepository>();
             services.AddScoped<IRepository<VehicleType>, VehicleTypeRepository>();
+            services.AddScoped<IOrderItemRepository, OrderItemRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
 
             return services;
         }
@@ -26,8 +27,10 @@ namespace WebAutopark.BusinessLogic.Extensoins
         public static IServiceCollection AddDtoServices(this IServiceCollection services)
         {
             services.AddScoped<IDataService<ComponentDto>, ComponentService>();
-            services.AddScoped<IDataService<VehicleDto>, VehicleService>();
+            services.AddScoped<IVehicleService, VehicleService>();
             services.AddScoped<IDataService<VehicleTypeDto>, VehicleTypeService>();
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IOrderItemService, OrderItemService>();
 
             return services;
         }
